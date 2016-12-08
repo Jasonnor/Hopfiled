@@ -9,15 +9,16 @@ import java.util.ArrayList;
 
 public class MainFrame {
     private static JMenuItem loadMenuItem;
-    private static JMenuItem generateMenuItem;
     private static JFrame frame;
     private JPanel layoutPanel;
-    private JPanel coordinatePanel;
     private JButton loadButton;
-    private JLabel loadValue;
-    private JButton generateButton;
+    private JLabel loadTrainValue;
+    private JLabel loadTestValue;
     private JLabel timesValue;
     private JLabel correctValue;
+    private JTextArea trainText;
+    private JTextArea testText;
+    private JTextArea resultText;
     private ArrayList<ArrayList<double[]>> trainDataList = new ArrayList<>();
     private ArrayList<ArrayList<double[]>> testDataList = new ArrayList<>();
 
@@ -29,12 +30,11 @@ public class MainFrame {
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files(*.txt)", "txt", "text");
             fileChooser.setFileFilter(filter);
             if (fileChooser.showOpenDialog(layoutPanel) == JFileChooser.APPROVE_OPTION) {
-                loadFile(fileChooser, trainDataList);
+                loadFile(fileChooser, trainDataList, loadTrainValue);
             }
             if (fileChooser.showOpenDialog(layoutPanel) == JFileChooser.APPROVE_OPTION) {
-                loadFile(fileChooser, testDataList);
+                loadFile(fileChooser, testDataList, loadTestValue);
             }
-            generateButton.setEnabled(true);
             runNetwork();
         });
         loadMenuItem.addActionListener(e -> {
@@ -44,19 +44,16 @@ public class MainFrame {
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files(*.txt)", "txt", "text");
             fileChooser.setFileFilter(filter);
             if (fileChooser.showOpenDialog(layoutPanel) == JFileChooser.APPROVE_OPTION) {
-                loadFile(fileChooser, trainDataList);
+                loadFile(fileChooser, trainDataList, loadTrainValue);
             }
             if (fileChooser.showOpenDialog(layoutPanel) == JFileChooser.APPROVE_OPTION) {
-                loadFile(fileChooser, testDataList);
+                loadFile(fileChooser, testDataList, loadTestValue);
             }
-            generateButton.setEnabled(true);
             runNetwork();
         });
-        generateButton.addActionListener(e -> runNetwork());
-        generateMenuItem.addActionListener(e -> runNetwork());
     }
 
-    private void loadFile(JFileChooser fileChooser, ArrayList<ArrayList<double[]>> dataList) {
+    private void loadFile(JFileChooser fileChooser, ArrayList<ArrayList<double[]>> dataList, JLabel loadValue) {
         File loadedFile = fileChooser.getSelectedFile();
         loadValue.setText(loadedFile.getPath());
         try (BufferedReader br = new BufferedReader(new FileReader(loadedFile))) {
@@ -88,25 +85,37 @@ public class MainFrame {
     private void runNetwork() {
         for (int i = 0; i < trainDataList.size(); i++) {
             ArrayList<double[]> trainData = trainDataList.get(i);
+            for (double[] data : trainData) {
+                for (double d : data)
+                    trainText.append((d > 0.0) ? "1" : " ");
+                trainText.append("\n");
+            }
             Network network = new Network(trainData);
             network.train();
             ArrayList<double[]> testData = testDataList.get(i);
+            for (double[] data : testData) {
+                for (double d : data)
+                    testText.append((d > 0.0) ? "1" : " ");
+                testText.append("\n");
+            }
             ArrayList<double[]> result = network.recall(testData);
             for (double[] data : result) {
-                for (double s : data) {
-                    if (s > 0.0)
-                        System.out.print("1");
-                    else
-                        System.out.print(" ");
-                }
-                System.out.println();
+                for (double d : data)
+                    resultText.append((d > 0.0) ? "1" : " ");
+                resultText.append("\n");
             }
-            System.out.println();
+            trainText.append("\n");
+            testText.append("\n");
+            resultText.append("\n");
         }
     }
 
     private void resetData() {
+        trainText.setText(null);
+        testText.setText(null);
+        resultText.setText(null);
         trainDataList.clear();
+        testDataList.clear();
     }
 
     private static void resetFrame() {
@@ -132,20 +141,14 @@ public class MainFrame {
         }
     }
 
-    private void createUIComponents() {
-        coordinatePanel = new GPanel();
-    }
-
     public static void main(String[] args) {
         JMenuBar menuBar = new JMenuBar();
         JMenu filesMenu = new JMenu("Files");
         JMenu skinsMenu = new JMenu("Skins");
         // Files menu
         loadMenuItem = new JMenuItem("Load", KeyEvent.VK_L);
-        generateMenuItem = new JMenuItem("Generate", KeyEvent.VK_G);
         filesMenu.setMnemonic(KeyEvent.VK_F);
         filesMenu.add(loadMenuItem);
-        filesMenu.add(generateMenuItem);
         menuBar.add(filesMenu);
         // Skins menu
         skinsMenu.setMnemonic(KeyEvent.VK_S);
@@ -191,18 +194,5 @@ public class MainFrame {
         changeLAF("Nimbus");
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-    }
-
-    private class GPanel extends JPanel {
-        @Override
-        public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            Graphics2D g2 = (Graphics2D) g;
-            g.setColor(Color.black);
-            g.drawLine(250, 0, 250, 500);
-            g.drawLine(0, 250, 500, 250);
-            g2.setColor(Color.black);
-            //g2.draw(new Line2D.double(point[0], point[1], point[0], point[1]));
-        }
     }
 }
