@@ -4,27 +4,27 @@ import java.util.*;
 
 class Network {
     private int dimension;
-    private ArrayList<Double[]> trainData = new ArrayList<>();
-    private Double[][] weights;
-    private Double[] threshold;
-    private Double[] input;
+    private ArrayList<double[]> trainData = new ArrayList<>();
+    private double[][] weights;
+    private double[] threshold;
 
-    public Network(ArrayList<Double[]> trainData) {
+    public Network(ArrayList<double[]> trainData) {
         this.trainData = trainData;
         this.dimension = trainData.get(0).length;
-        weights = new Double[dimension][dimension];
-        input = new Double[dimension];
-        threshold = new Double[dimension];
+        weights = new double[dimension][dimension];
+        threshold = new double[dimension];
         for (int i = 0; i < dimension; i++)
-            weights[i][i] = 0.0;
+            for (int j = 0; j < dimension; j++)
+                weights[i][j] = 0.0;
     }
 
     void train() {
         for (int j = 1; j < dimension; j++) {
             for (int i = 0; i < j; i++) {
-                for (Double[] data : trainData) {
-                    weights[i][j] = weights[j][i] = data[i] * data[j] / dimension;
+                for (double[] data : trainData) {
+                    weights[i][j] = weights[j][i] = data[i] * data[j] + weights[i][j];
                 }
+                weights[i][j] = weights[j][i] = weights[i][j] / dimension;
             }
         }
         for (int i = 0; i < dimension; i++) {
@@ -35,23 +35,25 @@ class Network {
         }
     }
 
-    Double[] recall(ArrayList<Double[]> testData) {
-        for (Double[] data : testData) {
-            System.arraycopy(data, 0, input, 0, dimension);
-            for (int times = 0; times < 100; times++) {
+    ArrayList<double[]> recall(ArrayList<double[]> testData) {
+        ArrayList<double[]> result = new ArrayList<>();
+        for (double[] data : testData) {
+            double[] input = data.clone();
+            for (int times = 0; times < 100000; times++) {
                 for (int i = 0; i < dimension; i++) {
-                    if (getExcitedState(i) > 0.0) {
+                    if (getExcitedState(i, input) > 0.0) {
                         input[i] = 1.0;
-                    } else {
+                    } else if (getExcitedState(i, input) < 0.0) {
                         input[i] = -1.0;
                     }
                 }
             }
+            result.add(input);
         }
-        return input;
+        return result;
     }
 
-    private Double getExcitedState(int i) {
+    private double getExcitedState(int i, double[] input) {
         float temp = 0.0f;
         for (int j = 0; j < dimension; j++) {
             temp += weights[i][j] * input[j];

@@ -18,7 +18,7 @@ public class MainFrame {
     private JButton generateButton;
     private JLabel timesValue;
     private JLabel correctValue;
-    private ArrayList<ArrayList<Double[]>> trainDataList = new ArrayList<>();
+    private ArrayList<ArrayList<double[]>> trainDataList = new ArrayList<>();
 
     private MainFrame() {
         loadButton.addActionListener(e -> {
@@ -48,25 +48,25 @@ public class MainFrame {
         resetData();
         try (BufferedReader br = new BufferedReader(new FileReader(loadedFile))) {
             String line = br.readLine();
-            ArrayList<Double[]> trainData = new ArrayList<>();
+            ArrayList<double[]> trainData = new ArrayList<>();
             while (line != null) {
                 if (line.equals("")) {
                     if (trainData.size() > 0) {
-                        trainDataList.add(trainData);
+                        trainDataList.add(new ArrayList<>(trainData));
                         trainData.clear();
                     }
                     line = br.readLine();
                     continue;
                 }
                 char[] charArray = line.toCharArray();
-                Double[] numbers = new Double[charArray.length];
+                double[] numbers = new double[charArray.length];
                 for (int i = 0; i < charArray.length; i++)
                     numbers[i] = (charArray[i] == '1') ? 1.0 : -1.0;
                 trainData.add(numbers);
                 line = br.readLine();
             }
             if (trainData.size() > 0)
-                trainDataList.add(trainData);
+                trainDataList.add(new ArrayList<>(trainData));
             generateButton.setEnabled(true);
             runNetwork();
         } catch (IOException e1) {
@@ -75,10 +75,20 @@ public class MainFrame {
     }
 
     private void runNetwork() {
-        for (ArrayList<Double[]> trainData : trainDataList) {
+        for (ArrayList<double[]> trainData : trainDataList) {
             Network network = new Network(trainData);
             network.train();
-            network.recall(trainData);
+            ArrayList<double[]> result = network.recall(trainData);
+            for (double[] data : result) {
+                for (double s : data) {
+                    if (s > 0.0)
+                        System.out.print("1");
+                    else
+                        System.out.print(" ");
+                }
+                System.out.println();
+            }
+            System.out.println();
         }
     }
 
@@ -179,7 +189,7 @@ public class MainFrame {
             g.drawLine(250, 0, 250, 500);
             g.drawLine(0, 250, 500, 250);
             g2.setColor(Color.black);
-            //g2.draw(new Line2D.Double(point[0], point[1], point[0], point[1]));
+            //g2.draw(new Line2D.double(point[0], point[1], point[0], point[1]));
         }
     }
 }
