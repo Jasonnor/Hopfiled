@@ -23,6 +23,7 @@ public class MainFrame {
     private JRadioButton thresholdWeightsButton;
     private ArrayList<ArrayList<double[]>> trainDataList = new ArrayList<>();
     private ArrayList<ArrayList<double[]>> testDataList = new ArrayList<>();
+    private boolean thresholdZero = true;
 
     private MainFrame() {
         loadButton.addActionListener(e -> {
@@ -51,6 +52,14 @@ public class MainFrame {
             if (fileChooser.showOpenDialog(layoutPanel) == JFileChooser.APPROVE_OPTION) {
                 loadFile(fileChooser, testDataList, loadTestValue);
             }
+            runNetwork();
+        });
+        threshold0Button.addActionListener(e -> {
+            thresholdZero = true;
+            runNetwork();
+        });
+        thresholdWeightsButton.addActionListener(e -> {
+            thresholdZero = false;
             runNetwork();
         });
     }
@@ -85,6 +94,9 @@ public class MainFrame {
     }
 
     private void runNetwork() {
+        trainText.setText(null);
+        testText.setText(null);
+        resultText.setText(null);
         for (int i = 0; i < trainDataList.size(); i++) {
             ArrayList<double[]> trainData = trainDataList.get(i);
             for (double[] data : trainData) {
@@ -92,7 +104,7 @@ public class MainFrame {
                     trainText.append((d > 0.0) ? "1" : " ");
                 trainText.append("\n");
             }
-            Network network = new Network(trainData);
+            Network network = new Network(trainData, thresholdZero);
             network.train();
             ArrayList<double[]> testData = testDataList.get(i);
             for (double[] data : testData) {
@@ -113,9 +125,6 @@ public class MainFrame {
     }
 
     private void resetData() {
-        trainText.setText(null);
-        testText.setText(null);
-        resultText.setText(null);
         trainDataList.clear();
         testDataList.clear();
     }

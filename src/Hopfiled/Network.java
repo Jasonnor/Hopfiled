@@ -7,15 +7,17 @@ class Network {
     private ArrayList<double[]> trainData = new ArrayList<>();
     private double[][] weights;
     private double[] threshold;
+    private boolean thresholdZero;
 
-    public Network(ArrayList<double[]> trainData) {
+    public Network(ArrayList<double[]> trainData, boolean thresholdZero) {
         this.trainData = trainData;
         this.dimension = trainData.get(0).length;
+        this.thresholdZero = thresholdZero;
         weights = new double[dimension][dimension];
         threshold = new double[dimension];
+        Arrays.fill(threshold, 0);
         for (int i = 0; i < dimension; i++)
-            for (int j = 0; j < dimension; j++)
-                weights[i][j] = 0.0;
+            Arrays.fill(weights[i], 0);
     }
 
     void train() {
@@ -28,10 +30,11 @@ class Network {
                 weights[j][i] = weights[i][j];
             }
         }
-        for (int i = 0; i < dimension; i++) {
-            threshold[i] = 0.0;
-            for (int j = 0; j < i; j++) {
-                threshold[i] += weights[i][j];
+        if (!thresholdZero) {
+            for (int i = 0; i < dimension; i++) {
+                for (int j = 1; j < dimension; j++) {
+                    threshold[i] += weights[i][j];
+                }
             }
         }
     }
