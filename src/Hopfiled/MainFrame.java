@@ -1,19 +1,16 @@
 package Hopfiled;
 
-import Hopfiled.Algorithm;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainFrame {
+    private Network network;
     private static JMenuItem loadMenuItem;
     private static JMenuItem generateMenuItem;
     private static JFrame frame;
@@ -70,7 +67,6 @@ public class MainFrame {
                 for (int i = 1; i <= lineSplit.length; i++)
                     numbers[i] = Double.parseDouble(lineSplit[i - 1]);
                 inputs.add(numbers);
-                Double output = numbers[numbers.length - 1];
                 line = br.readLine();
             }
             generateButton.setEnabled(true);
@@ -81,9 +77,7 @@ public class MainFrame {
     }
 
     private void startTrain() {
-        inputs.clear();
-        trainData.clear();
-        testData.clear();
+        network = new Network(trainData);
     }
 
     private void resetData() {
