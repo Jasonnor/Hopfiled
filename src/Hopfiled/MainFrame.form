@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Hopfiled.MainFrame">
-  <grid id="27dc6" binding="layoutPanel" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="layoutPanel" layout-manager="GridLayoutManager" row-count="4" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="20" left="20" bottom="20" right="20"/>
     <constraints>
-      <xy x="20" y="-16" width="975" height="732"/>
+      <xy x="20" y="-16" width="975" height="740"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -62,7 +62,7 @@
       </component>
       <scrollpane id="16909">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <minimum-size width="900" height="600"/>
             <preferred-size width="900" height="600"/>
           </grid>
@@ -115,7 +115,7 @@
       </scrollpane>
       <component id="899fd" class="javax.swing.JLabel" binding="loadTestValue">
         <constraints>
-          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+          <grid row="0" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="400" height="-1"/>
           </grid>
         </constraints>
@@ -125,6 +125,28 @@
           <text value="File not loaded"/>
         </properties>
       </component>
+      <component id="c3b95" class="javax.swing.JRadioButton" binding="threshold0Button">
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Threshold = 0"/>
+        </properties>
+      </component>
+      <component id="6b062" class="javax.swing.JRadioButton" binding="thresholdWeightsButton">
+        <constraints>
+          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Threshold = sum of weights"/>
+        </properties>
+      </component>
     </children>
   </grid>
+  <buttonGroups>
+    <group name="thresholdGroup">
+      <member id="c3b95"/>
+      <member id="6b062"/>
+    </group>
+  </buttonGroups>
 </form>

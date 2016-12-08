@@ -4,6 +4,7 @@
     <list default="true" id="807dff5c-c2fa-4b3a-a831-66fa3075227c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Hopfiled/MainFrame.form" afterPath="$PROJECT_DIR$/src/Hopfiled/MainFrame.form" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Hopfiled/MainFrame.java" afterPath="$PROJECT_DIR$/src/Hopfiled/MainFrame.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Hopfiled/Network.java" afterPath="$PROJECT_DIR$/src/Hopfiled/Network.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,33 +23,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Network.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Hopfiled/Network.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="620">
-              <caret line="20" column="18" lean-forward="true" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
-              <folding />
-            </state>
+      <file leaf-file-name="MainFrame.form" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Hopfiled/MainFrame.form">
+          <provider selected="true" editor-type-id="ui-designer">
+            <state />
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainFrame.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainFrame.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Hopfiled/MainFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="526">
-              <caret line="123" column="42" lean-forward="true" selection-start-line="123" selection-start-column="42" selection-end-line="123" selection-end-column="42" />
+            <state relative-caret-position="558">
+              <caret line="89" column="45" lean-forward="false" selection-start-line="89" selection-start-column="45" selection-end-line="89" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#MainFrame#0;class#MainFrame#0" expanded="false" />
+                <element signature="method#loadFile#0;class#MainFrame#0" expanded="false" />
+                <element signature="method#resetData#0;class#MainFrame#0" expanded="false" />
+                <element signature="method#resetFrame#0;class#MainFrame#0" expanded="false" />
                 <element signature="method#changeLAF#0;class#MainFrame#0" expanded="false" />
+                <element signature="method#main#0;class#MainFrame#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainFrame.form" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Hopfiled/MainFrame.form">
-          <provider selected="true" editor-type-id="ui-designer">
-            <state />
+      <file leaf-file-name="Network.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Hopfiled/Network.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="62">
+              <caret line="20" column="18" lean-forward="true" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
@@ -85,8 +91,8 @@
         <option value="$PROJECT_DIR$/src/Hopfiled/Hopfiled.java" />
         <option value="$PROJECT_DIR$/src/Hopfiled/Algorithm.java" />
         <option value="$PROJECT_DIR$/src/Hopfiled/Network.java" />
-        <option value="$PROJECT_DIR$/src/Hopfiled/MainFrame.form" />
         <option value="$PROJECT_DIR$/src/Hopfiled/MainFrame.java" />
+        <option value="$PROJECT_DIR$/src/Hopfiled/MainFrame.form" />
       </list>
     </option>
   </component>
@@ -573,12 +579,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1481176336471</updated>
-      <workItem from="1481176338260" duration="20815000" />
+      <workItem from="1481176338260" duration="21862000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20815000" />
+    <option name="totallyTimeSpent" value="21862000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
@@ -623,14 +629,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="28" />
+      <option name="time" value="31" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
-        <watch expression="weights" language="JAVA" />
-        <watch expression="threshold" language="JAVA" />
-        <watch expression="trainData" language="JAVA" />
-        <watch expression="trainDataList.get(1)" />
+        <watch expression="testDataList" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
@@ -652,22 +655,27 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Hopfiled/Network.java">
+    <entry file="file://$PROJECT_DIR$/src/Hopfiled/MainFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="620">
-          <caret line="20" column="18" lean-forward="true" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
-          <folding />
+        <state relative-caret-position="558">
+          <caret line="89" column="45" lean-forward="false" selection-start-line="89" selection-start-column="45" selection-end-line="89" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#MainFrame#0;class#MainFrame#0" expanded="false" />
+            <element signature="method#loadFile#0;class#MainFrame#0" expanded="false" />
+            <element signature="method#resetData#0;class#MainFrame#0" expanded="false" />
+            <element signature="method#resetFrame#0;class#MainFrame#0" expanded="false" />
+            <element signature="method#changeLAF#0;class#MainFrame#0" expanded="false" />
+            <element signature="method#main#0;class#MainFrame#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Hopfiled/MainFrame.java">
+    <entry file="file://$PROJECT_DIR$/src/Hopfiled/Network.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="526">
-          <caret line="123" column="42" lean-forward="true" selection-start-line="123" selection-start-column="42" selection-end-line="123" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#changeLAF#0;class#MainFrame#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="62">
+          <caret line="20" column="18" lean-forward="true" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>

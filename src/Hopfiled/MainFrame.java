@@ -19,6 +19,8 @@ public class MainFrame {
     private JTextArea trainText;
     private JTextArea testText;
     private JTextArea resultText;
+    private JRadioButton threshold0Button;
+    private JRadioButton thresholdWeightsButton;
     private ArrayList<ArrayList<double[]>> trainDataList = new ArrayList<>();
     private ArrayList<ArrayList<double[]>> testDataList = new ArrayList<>();
 

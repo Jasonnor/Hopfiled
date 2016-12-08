@@ -22,9 +22,10 @@ class Network {
         for (int j = 1; j < dimension; j++) {
             for (int i = 0; i < j; i++) {
                 for (double[] data : trainData) {
-                    weights[i][j] = weights[j][i] = data[i] * data[j] + weights[i][j];
+                    weights[i][j] += data[i] * data[j];
                 }
-                weights[i][j] = weights[j][i] = weights[i][j] / dimension;
+                weights[i][j] /= dimension;
+                weights[j][i] = weights[i][j];
             }
         }
         for (int i = 0; i < dimension; i++) {
@@ -38,8 +39,9 @@ class Network {
     ArrayList<double[]> recall(ArrayList<double[]> testData) {
         ArrayList<double[]> result = new ArrayList<>();
         for (double[] data : testData) {
-            double[] input = data.clone();
-            for (int times = 0; times < 100000; times++) {
+            double[] input = data.clone(), inputPerv;
+            do {
+                inputPerv = input.clone();
                 for (int i = 0; i < dimension; i++) {
                     if (getExcitedState(i, input) > 0.0) {
                         input[i] = 1.0;
@@ -47,7 +49,7 @@ class Network {
                         input[i] = -1.0;
                     }
                 }
-            }
+            } while (!Arrays.equals(input, inputPerv));
             result.add(input);
         }
         return result;
