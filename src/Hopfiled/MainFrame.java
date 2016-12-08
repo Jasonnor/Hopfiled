@@ -5,12 +5,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MainFrame {
-    private Network network;
     private static JMenuItem loadMenuItem;
     private static JMenuItem generateMenuItem;
     private static JFrame frame;
@@ -21,11 +18,7 @@ public class MainFrame {
     private JButton generateButton;
     private JLabel timesValue;
     private JLabel correctValue;
-    private DecimalFormat df = new DecimalFormat("####0.00");
-    private Color[] colorArray = {Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW, Color.CYAN, Color.PINK};
-    private ArrayList<Double[]> inputs = new ArrayList<>();
-    private ArrayList<Double[]> trainData = new ArrayList<>();
-    private ArrayList<Double[]> testData = new ArrayList<>();
+    private ArrayList<ArrayList<Double[]>> trainDataList = new ArrayList<>();
 
     private MainFrame() {
         loadButton.addActionListener(e -> {
@@ -55,20 +48,25 @@ public class MainFrame {
         resetData();
         try (BufferedReader br = new BufferedReader(new FileReader(loadedFile))) {
             String line = br.readLine();
+            ArrayList<Double[]> trainData = new ArrayList<>();
             while (line != null) {
-                // Split by space or tab
-                String[] lineSplit = line.split("\\s+");
-                // Remove empty elements
-                lineSplit = Arrays.stream(lineSplit).
-                        filter(s -> (s != null && s.length() > 0)).
-                        toArray(String[]::new);
-                Double[] numbers = new Double[lineSplit.length + 1];
-                numbers[0] = -1.0;
-                for (int i = 1; i <= lineSplit.length; i++)
-                    numbers[i] = Double.parseDouble(lineSplit[i - 1]);
-                inputs.add(numbers);
+                if (line.equals("")) {
+                    if (trainData.size() > 0) {
+                        trainDataList.add(trainData);
+                        trainData.clear();
+                    }
+                    line = br.readLine();
+                    continue;
+                }
+                char[] charArray = line.toCharArray();
+                Double[] numbers = new Double[charArray.length];
+                for (int i = 0; i < charArray.length; i++)
+                    numbers[i] = (charArray[i] == '1') ? 1.0 : -1.0;
+                trainData.add(numbers);
                 line = br.readLine();
             }
+            if (trainData.size() > 0)
+                trainDataList.add(trainData);
             generateButton.setEnabled(true);
             runNetwork();
         } catch (IOException e1) {
@@ -77,14 +75,15 @@ public class MainFrame {
     }
 
     private void runNetwork() {
-        network = new Network(trainData);
-        network.train();
+        for (ArrayList<Double[]> trainData : trainDataList) {
+            Network network = new Network(trainData);
+            network.train();
+            network.recall(trainData);
+        }
     }
 
     private void resetData() {
-        inputs.clear();
-        trainData.clear();
-        testData.clear();
+        trainDataList.clear();
     }
 
     private static void resetFrame() {

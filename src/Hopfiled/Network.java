@@ -7,13 +7,13 @@ class Network {
     private ArrayList<Double[]> trainData = new ArrayList<>();
     private Double[][] weights;
     private Double[] threshold;
-    private Double[] inputCells;
+    private Double[] input;
 
     public Network(ArrayList<Double[]> trainData) {
         this.trainData = trainData;
         this.dimension = trainData.get(0).length;
         weights = new Double[dimension][dimension];
-        inputCells = new Double[dimension];
+        input = new Double[dimension];
         threshold = new Double[dimension];
         for (int i = 0; i < dimension; i++)
             weights[i][i] = 0.0;
@@ -23,7 +23,7 @@ class Network {
         for (int j = 1; j < dimension; j++) {
             for (int i = 0; i < j; i++) {
                 for (Double[] data : trainData) {
-                    weights[i][j] = weights[j][i] = regularize(data[i]) * regularize(data[j]) / dimension;
+                    weights[i][j] = weights[j][i] = data[i] * data[j] / dimension;
                 }
             }
         }
@@ -35,29 +35,26 @@ class Network {
         }
     }
 
-    Double[] recall(Double[] inputs, int maxTimes) {
-        System.arraycopy(inputs, 0, inputCells, 0, dimension);
-        for (int ii = 0; ii < maxTimes; ii++) {
-            for (int i = 0; i < dimension; i++) {
-                if (getExcitedState(i) > 0.0) {
-                    inputCells[i] = 1.0;
-                } else {
-                    inputCells[i] = -1.0;
+    Double[] recall(ArrayList<Double[]> testData) {
+        for (Double[] data : testData) {
+            System.arraycopy(data, 0, input, 0, dimension);
+            for (int times = 0; times < 100; times++) {
+                for (int i = 0; i < dimension; i++) {
+                    if (getExcitedState(i) > 0.0) {
+                        input[i] = 1.0;
+                    } else {
+                        input[i] = -1.0;
+                    }
                 }
             }
         }
-        return inputCells;
-    }
-
-    private Double regularize(Double x) {
-        if (x < 0.0) return -1.0;
-        return 1.0;
+        return input;
     }
 
     private Double getExcitedState(int i) {
         float temp = 0.0f;
         for (int j = 0; j < dimension; j++) {
-            temp += weights[i][j] * inputCells[j];
+            temp += weights[i][j] * input[j];
         }
         return temp - threshold[i];
     }
