@@ -44,8 +44,8 @@ public class MainFrame {
                 loadFile(fileChooser);
             }
         });
-        generateButton.addActionListener(e -> startTrain());
-        generateMenuItem.addActionListener(e -> startTrain());
+        generateButton.addActionListener(e -> runNetwork());
+        generateMenuItem.addActionListener(e -> runNetwork());
     }
 
     private void loadFile(JFileChooser fileChooser) {
@@ -70,14 +70,15 @@ public class MainFrame {
                 line = br.readLine();
             }
             generateButton.setEnabled(true);
-            startTrain();
+            runNetwork();
         } catch (IOException e1) {
             e1.printStackTrace();
         }
     }
 
-    private void startTrain() {
+    private void runNetwork() {
         network = new Network(trainData);
+        network.train();
     }
 
     private void resetData() {

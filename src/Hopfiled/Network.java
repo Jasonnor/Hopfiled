@@ -19,7 +19,7 @@ class Network {
             weights[i][i] = 0.0;
     }
 
-    public void train() {
+    void train() {
         for (int j = 1; j < dimension; j++) {
             for (int i = 0; i < j; i++) {
                 for (Double[] data : trainData) {
@@ -35,7 +35,7 @@ class Network {
         }
     }
 
-    public Double[] recall(Double[] inputs, int maxTimes) {
+    Double[] recall(Double[] inputs, int maxTimes) {
         System.arraycopy(inputs, 0, inputCells, 0, dimension);
         for (int ii = 0; ii < maxTimes; ii++) {
             for (int i = 0; i < dimension; i++) {
