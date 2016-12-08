@@ -21,8 +21,8 @@ class Network {
     }
 
     void train() {
-        for (int j = 1; j < dimension; j++) {
-            for (int i = 0; i < j; i++) {
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < i; j++) {
                 for (double[] data : trainData) {
                     weights[i][j] += data[i] * data[j];
                 }
@@ -32,7 +32,7 @@ class Network {
         }
         if (!thresholdZero) {
             for (int i = 0; i < dimension; i++) {
-                for (int j = 1; j < dimension; j++) {
+                for (int j = 0; j < dimension; j++) {
                     threshold[i] += weights[i][j];
                 }
             }
@@ -42,27 +42,30 @@ class Network {
     ArrayList<double[]> recall(ArrayList<double[]> testData) {
         ArrayList<double[]> result = new ArrayList<>();
         for (double[] data : testData) {
-            double[] input = data.clone(), inputPerv;
+            double[] x = data.clone(), xPerv;
+            int equalTimes = 0;
             do {
-                inputPerv = input.clone();
+                xPerv = x.clone();
                 for (int i = 0; i < dimension; i++) {
-                    if (getExcitedState(i, input) > 0.0) {
-                        input[i] = 1.0;
-                    } else if (getExcitedState(i, input) < 0.0) {
-                        input[i] = -1.0;
-                    }
+                    x[i] = sgn(getExcitedState(i, x));
                 }
-            } while (!Arrays.equals(input, inputPerv));
-            result.add(input);
+                if (Arrays.equals(x, xPerv))
+                    equalTimes++;
+            } while (equalTimes < 2);
+            result.add(x);
         }
         return result;
     }
 
-    private double getExcitedState(int i, double[] input) {
-        float temp = 0.0f;
+    private double getExcitedState(int i, double[] x) {
+        double sigma = 0.0;
         for (int j = 0; j < dimension; j++) {
-            temp += weights[i][j] * input[j];
+            sigma += weights[i][j] * x[j];
         }
-        return temp - threshold[i];
+        return sigma - threshold[i];
+    }
+
+    private double sgn(double x) {
+        return (x > 0.0) ? 1.0 : (x == 0.0) ? x : -1.0;
     }
 }

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="807dff5c-c2fa-4b3a-a831-66fa3075227c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Hopfiled/MainFrame.form" afterPath="$PROJECT_DIR$/src/Hopfiled/MainFrame.form" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/Hopfield3_Testing.txt" afterPath="$PROJECT_DIR$/data/Hopfield3_Testing.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Hopfiled/MainFrame.java" afterPath="$PROJECT_DIR$/src/Hopfiled/MainFrame.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Hopfiled/Network.java" afterPath="$PROJECT_DIR$/src/Hopfiled/Network.java" />
     </list>
@@ -33,12 +34,10 @@
       <file leaf-file-name="MainFrame.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Hopfiled/MainFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="98" column="33" lean-forward="false" selection-start-line="98" selection-start-column="33" selection-end-line="98" selection-end-column="33" />
+            <state relative-caret-position="527">
+              <caret line="39" column="13" lean-forward="true" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#loadFile#0;class#MainFrame#0" expanded="false" />
-                <element signature="method#resetData#0;class#MainFrame#0" expanded="false" />
                 <element signature="method#resetFrame#0;class#MainFrame#0" expanded="false" />
                 <element signature="method#changeLAF#0;class#MainFrame#0" expanded="false" />
                 <element signature="method#main#0;class#MainFrame#0" expanded="false" />
@@ -50,9 +49,12 @@
       <file leaf-file-name="Network.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Hopfiled/Network.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1178">
-              <caret line="38" column="9" lean-forward="true" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
-              <folding />
+            <state relative-caret-position="403">
+              <caret line="25" column="46" lean-forward="false" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="46" />
+              <folding>
+                <element signature="e#2113#2114#0" expanded="true" />
+                <element signature="e#2175#2176#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -578,12 +580,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1481176336471</updated>
-      <workItem from="1481176338260" duration="22747000" />
+      <workItem from="1481176338260" duration="29647000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22747000" />
+    <option name="totallyTimeSpent" value="29647000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
@@ -611,7 +613,7 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4043716" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4043716" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -628,12 +630,16 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="39" />
+      <option name="time" value="57" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="testDataList" language="JAVA" />
+        <watch expression="threshold" language="JAVA" />
         <watch expression="weights" language="JAVA" />
+        <watch expression="(x &gt; 0.0) ? 1.0 : (x == 0.0) ? x : -1.0" language="JAVA" />
+        <watch expression="(x &gt; 0.0) ? 1.0 : (x == 0.0) ? x : -1.0" language="JAVA" />
+        <watch expression="trainData" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
@@ -658,10 +664,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Hopfiled/Network.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/src.zip!/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1178">
-          <caret line="38" column="9" lean-forward="true" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
+        <state relative-caret-position="158">
+          <caret line="428" column="0" lean-forward="false" selection-start-line="428" selection-start-column="0" selection-end-line="428" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/src.zip!/java/lang/Object.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="211" column="28" lean-forward="false" selection-start-line="211" selection-start-column="28" selection-end-line="211" selection-end-column="28" />
           <folding />
         </state>
       </provider>
@@ -671,22 +685,23 @@
         <state />
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/src.zip!/java/util/ArrayList.java">
+    <entry file="file://$PROJECT_DIR$/src/Hopfiled/Network.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="428" column="0" lean-forward="false" selection-start-line="428" selection-start-column="0" selection-end-line="428" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="403">
+          <caret line="25" column="46" lean-forward="false" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="46" />
+          <folding>
+            <element signature="e#2113#2114#0" expanded="true" />
+            <element signature="e#2175#2176#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Hopfiled/MainFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="98" column="33" lean-forward="false" selection-start-line="98" selection-start-column="33" selection-end-line="98" selection-end-column="33" />
+        <state relative-caret-position="527">
+          <caret line="39" column="13" lean-forward="true" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#loadFile#0;class#MainFrame#0" expanded="false" />
-            <element signature="method#resetData#0;class#MainFrame#0" expanded="false" />
             <element signature="method#resetFrame#0;class#MainFrame#0" expanded="false" />
             <element signature="method#changeLAF#0;class#MainFrame#0" expanded="false" />
             <element signature="method#main#0;class#MainFrame#0" expanded="false" />
