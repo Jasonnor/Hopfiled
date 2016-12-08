@@ -19,41 +19,54 @@ public class MainFrame {
     private JLabel timesValue;
     private JLabel correctValue;
     private ArrayList<ArrayList<double[]>> trainDataList = new ArrayList<>();
+    private ArrayList<ArrayList<double[]>> testDataList = new ArrayList<>();
 
     private MainFrame() {
         loadButton.addActionListener(e -> {
+            resetFrame();
+            resetData();
             JFileChooser fileChooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files(*.txt)", "txt", "text");
             fileChooser.setFileFilter(filter);
             if (fileChooser.showOpenDialog(layoutPanel) == JFileChooser.APPROVE_OPTION) {
-                loadFile(fileChooser);
+                loadFile(fileChooser, trainDataList);
             }
+            if (fileChooser.showOpenDialog(layoutPanel) == JFileChooser.APPROVE_OPTION) {
+                loadFile(fileChooser, testDataList);
+            }
+            generateButton.setEnabled(true);
+            runNetwork();
         });
         loadMenuItem.addActionListener(e -> {
+            resetFrame();
+            resetData();
             JFileChooser fileChooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files(*.txt)", "txt", "text");
             fileChooser.setFileFilter(filter);
             if (fileChooser.showOpenDialog(layoutPanel) == JFileChooser.APPROVE_OPTION) {
-                loadFile(fileChooser);
+                loadFile(fileChooser, trainDataList);
             }
+            if (fileChooser.showOpenDialog(layoutPanel) == JFileChooser.APPROVE_OPTION) {
+                loadFile(fileChooser, testDataList);
+            }
+            generateButton.setEnabled(true);
+            runNetwork();
         });
         generateButton.addActionListener(e -> runNetwork());
         generateMenuItem.addActionListener(e -> runNetwork());
     }
 
-    private void loadFile(JFileChooser fileChooser) {
+    private void loadFile(JFileChooser fileChooser, ArrayList<ArrayList<double[]>> dataList) {
         File loadedFile = fileChooser.getSelectedFile();
         loadValue.setText(loadedFile.getPath());
-        resetFrame();
-        resetData();
         try (BufferedReader br = new BufferedReader(new FileReader(loadedFile))) {
             String line = br.readLine();
-            ArrayList<double[]> trainData = new ArrayList<>();
+            ArrayList<double[]> data = new ArrayList<>();
             while (line != null) {
                 if (line.equals("")) {
-                    if (trainData.size() > 0) {
-                        trainDataList.add(new ArrayList<>(trainData));
-                        trainData.clear();
+                    if (data.size() > 0) {
+                        dataList.add(new ArrayList<>(data));
+                        data.clear();
                     }
                     line = br.readLine();
                     continue;
@@ -62,23 +75,23 @@ public class MainFrame {
                 double[] numbers = new double[charArray.length];
                 for (int i = 0; i < charArray.length; i++)
                     numbers[i] = (charArray[i] == '1') ? 1.0 : -1.0;
-                trainData.add(numbers);
+                data.add(numbers);
                 line = br.readLine();
             }
-            if (trainData.size() > 0)
-                trainDataList.add(new ArrayList<>(trainData));
-            generateButton.setEnabled(true);
-            runNetwork();
+            if (data.size() > 0)
+                dataList.add(new ArrayList<>(data));
         } catch (IOException e1) {
             e1.printStackTrace();
         }
     }
 
     private void runNetwork() {
-        for (ArrayList<double[]> trainData : trainDataList) {
+        for (int i = 0; i < trainDataList.size(); i++) {
+            ArrayList<double[]> trainData = trainDataList.get(i);
             Network network = new Network(trainData);
             network.train();
-            ArrayList<double[]> result = network.recall(trainData);
+            ArrayList<double[]> testData = testDataList.get(i);
+            ArrayList<double[]> result = network.recall(testData);
             for (double[] data : result) {
                 for (double s : data) {
                     if (s > 0.0)
