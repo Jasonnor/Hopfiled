@@ -8,8 +8,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class MainFrame {
     private static JMenuItem loadMenuItem;
