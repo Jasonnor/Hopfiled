@@ -1,5 +1,7 @@
 package Hopfiled;
 
+import javafx.util.Pair;
+
 import java.util.*;
 
 class Network {
@@ -39,29 +41,29 @@ class Network {
         }
     }
 
-    ArrayList<double[]> recall(ArrayList<double[]> testData) {
+    Pair<ArrayList<double[]>, Integer> recall(ArrayList<double[]> testData) {
         ArrayList<double[]> result = new ArrayList<>();
+        int runTimes = 0;
         for (double[] data : testData) {
             double[] x = data.clone(), xPerv;
-            int equalTimes = 0;
+            runTimes = 0;
             do {
                 xPerv = x.clone();
                 for (int i = 0; i < dimension; i++) {
-                    x[i] = sgn(getExcitedState(i, x));
+                    x[i] = sgn(getExcitedState(i, xPerv));
                 }
-                if (Arrays.equals(x, xPerv))
-                    equalTimes++;
-            } while (equalTimes < 2);
+                runTimes++;
+            } while (!Arrays.equals(x, xPerv) && runTimes < 10000);
             result.add(x);
         }
-        return result;
+        return new Pair<>(result, runTimes);
     }
 
     private double getExcitedState(int i, double[] x) {
         double sigma = 0.0;
-        for (int j = 0; j < dimension; j++) {
-            sigma += weights[i][j] * x[j];
-        }
+        for (int j = 0; j < dimension; j++)
+            if (i != j)
+                sigma += weights[i][j] * x[j];
         return sigma - threshold[i];
     }
 

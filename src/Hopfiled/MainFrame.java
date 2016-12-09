@@ -1,5 +1,7 @@
 package Hopfiled;
 
+import javafx.util.Pair;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -126,8 +128,8 @@ public class MainFrame {
             }
             Network network = new Network(trainData, thresholdZero);
             network.train();
-            ArrayList<double[]> result = network.recall(testData);
-            for (double[] data : result) {
+            Pair<ArrayList<double[]>, Integer> result = network.recall(testData);
+            for (double[] data : result.getKey()) {
                 for (double d : data)
                     resultText.append((d > 0.0) ? "1" : " ");
                 resultText.append("\n");
@@ -135,6 +137,7 @@ public class MainFrame {
             trainText.append("\n");
             testText.append("\n");
             resultText.append("\n");
+            timesValue.setText(result.getValue().toString());
         }
         trainText.setCaretPosition(0);
         testText.setCaretPosition(0);
