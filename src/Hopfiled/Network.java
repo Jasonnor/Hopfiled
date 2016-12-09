@@ -53,7 +53,7 @@ class Network {
                     x[i] = sgn(getExcitedState(i, xPerv));
                 }
                 runTimes++;
-            } while (!Arrays.equals(x, xPerv) && runTimes < 10000);
+            } while (!Arrays.equals(x, xPerv) && runTimes < 1000);
             result.add(x);
         }
         return new Pair<>(result, runTimes);

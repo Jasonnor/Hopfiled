@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainFrame {
     private static JMenuItem loadMenuItem;
@@ -113,6 +115,8 @@ public class MainFrame {
         trainText.setText(null);
         testText.setText(null);
         resultText.setText(null);
+        float correct = 0, total = 0;
+        int times = 0;
         for (int i = 0; i < trainDataList.size(); i++) {
             ArrayList<double[]> trainData = trainDataList.get(i);
             for (double[] data : trainData) {
@@ -134,11 +138,20 @@ public class MainFrame {
                     resultText.append((d > 0.0) ? "1" : " ");
                 resultText.append("\n");
             }
+            for (int j = 0; j < trainData.size(); j++) {
+                for (int k = 0; k < trainData.get(j).length; k++) {
+                    if (trainData.get(j)[k] == result.getKey().get(j)[k])
+                        ++correct;
+                }
+            }
             trainText.append("\n");
             testText.append("\n");
             resultText.append("\n");
-            timesValue.setText(result.getValue().toString());
+            times += result.getValue();
+            total += trainData.get(0).length * trainData.size();
         }
+        timesValue.setText(String.valueOf(times));
+        correctValue.setText((correct / total * 100) + "%");
         trainText.setCaretPosition(0);
         testText.setCaretPosition(0);
         resultText.setCaretPosition(0);
