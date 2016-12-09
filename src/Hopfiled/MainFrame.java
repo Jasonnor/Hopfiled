@@ -21,6 +21,8 @@ public class MainFrame {
     private JTextArea resultText;
     private JRadioButton threshold0Button;
     private JRadioButton thresholdWeightsButton;
+    private JButton generateNoiseButton;
+    private JTextField noiseText;
     private ArrayList<ArrayList<double[]>> trainDataList = new ArrayList<>();
     private ArrayList<ArrayList<double[]>> testDataList = new ArrayList<>();
     private boolean thresholdZero = true;
@@ -38,6 +40,7 @@ public class MainFrame {
             if (fileChooser.showOpenDialog(layoutPanel) == JFileChooser.APPROVE_OPTION) {
                 loadFile(fileChooser, testDataList, loadTestValue);
             }
+            generateNoiseButton.setEnabled(true);
             runNetwork();
         });
         loadMenuItem.addActionListener(e -> {
@@ -52,6 +55,17 @@ public class MainFrame {
             if (fileChooser.showOpenDialog(layoutPanel) == JFileChooser.APPROVE_OPTION) {
                 loadFile(fileChooser, testDataList, loadTestValue);
             }
+            generateNoiseButton.setEnabled(true);
+            runNetwork();
+        });
+        generateNoiseButton.addActionListener(e -> {
+            for (int n = 0; n < trainDataList.size(); n++)
+                for (int i = 0; i < trainDataList.get(n).size(); i++)
+                    for (int j = 0; j < trainDataList.get(n).get(i).length; j++)
+                        if (Math.random() < Double.parseDouble(noiseText.getText()))
+                            testDataList.get(n).get(i)[j] = trainDataList.get(n).get(i)[j] * -1;
+                        else
+                            testDataList.get(n).get(i)[j] = trainDataList.get(n).get(i)[j];
             runNetwork();
         });
         threshold0Button.addActionListener(e -> {
@@ -104,14 +118,14 @@ public class MainFrame {
                     trainText.append((d > 0.0) ? "1" : " ");
                 trainText.append("\n");
             }
-            Network network = new Network(trainData, thresholdZero);
-            network.train();
             ArrayList<double[]> testData = testDataList.get(i);
             for (double[] data : testData) {
                 for (double d : data)
                     testText.append((d > 0.0) ? "1" : " ");
                 testText.append("\n");
             }
+            Network network = new Network(trainData, thresholdZero);
+            network.train();
             ArrayList<double[]> result = network.recall(testData);
             for (double[] data : result) {
                 for (double d : data)
@@ -122,6 +136,9 @@ public class MainFrame {
             testText.append("\n");
             resultText.append("\n");
         }
+        trainText.setCaretPosition(0);
+        testText.setCaretPosition(0);
+        resultText.setCaretPosition(0);
     }
 
     private void resetData() {
