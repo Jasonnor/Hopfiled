@@ -87,19 +87,16 @@ public class MainFrame {
             String line = br.readLine();
             ArrayList<double[]> data = new ArrayList<>();
             while (line != null) {
-                if (line.equals("")) {
-                    if (data.size() > 0) {
-                        dataList.add(new ArrayList<>(data));
-                        data.clear();
-                    }
-                    line = br.readLine();
-                    continue;
+                if (line.equals("") && data.size() > 0) {
+                    dataList.add(new ArrayList<>(data));
+                    data.clear();
+                } else if (!line.equals("")) {
+                    char[] charArray = line.toCharArray();
+                    double[] numbers = new double[charArray.length];
+                    for (int i = 0; i < charArray.length; i++)
+                        numbers[i] = (charArray[i] == '1') ? 1.0 : -1.0;
+                    data.add(numbers);
                 }
-                char[] charArray = line.toCharArray();
-                double[] numbers = new double[charArray.length];
-                for (int i = 0; i < charArray.length; i++)
-                    numbers[i] = (charArray[i] == '1') ? 1.0 : -1.0;
-                data.add(numbers);
                 line = br.readLine();
             }
             if (data.size() > 0)
