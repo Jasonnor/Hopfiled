@@ -32,13 +32,10 @@ class Network {
                 weights[j][i] = weights[i][j];
             }
         }
-        if (!thresholdZero) {
-            for (int i = 0; i < dimension; i++) {
-                for (int j = 0; j < dimension; j++) {
+        if (!thresholdZero)
+            for (int i = 0; i < dimension; i++)
+                for (int j = 0; j < dimension; j++)
                     threshold[i] += weights[i][j];
-                }
-            }
-        }
     }
 
     Pair<ArrayList<double[]>, Integer> recall(ArrayList<double[]> testData) {
